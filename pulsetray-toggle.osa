@@ -4,18 +4,13 @@ tell application "PulseTray"
     set STATUS to connectionStatus of connection 1
     # display alert STATUS
     # do shell script "echo " & STATUS
+    # beep 1
 end tell
 
-ignoring application responses
-    tell application "System Events" to tell process "PulseTray"
-        click menu bar item 1 of menu bar 2
-    end tell
-end ignoring
-do shell script "killall System\\ Events"
-delay 2
-
 tell application "System Events" to tell process "PulseTray"
+    activate
     tell menu bar item 1 of menu bar 2
+        click
         tell menu item "EMEA" of menu 1
             click
             delay 0.1
@@ -29,7 +24,6 @@ tell application "System Events" to tell process "PulseTray"
 end tell
 
 if STATUS = "Disconnected"
-    do shell script "killall System\\ Events"
     delay 2
     set TOKEN to do shell script "/usr/local/bin/stoken"
     tell application "System Events" to tell process "PulseTray"
