@@ -1,17 +1,24 @@
 #!/usr/bin/osascript
 
+-- Configure these:
+set CONNECTION_NAME to "Springtown"
+set CONNECTION_INDEX to 5  --  position in the list of connections (1-based)
+
+
 tell application "PulseTray"
-    set STATUS to connectionStatus of connection 1
-    # display alert STATUS
-    # do shell script "echo " & STATUS
-    # beep 1
+    set STATUS to connectionStatus of connection CONNECTION_INDEX
 end tell
+-- return STATUS
 
 tell application "System Events" to tell process "PulseTray"
     activate
+
+    -- UI elements
+    -- ^ https://n8henrie.com/2013/03/a-strategy-for-ui-scripting-in-applescript/
+
     tell menu bar item 1 of menu bar 2
         click
-        tell menu item "EMEA" of menu 1
+        tell menu item CONNECTION_NAME of menu 1
             click
             delay 0.1
             if STATUS = "Disconnected"
